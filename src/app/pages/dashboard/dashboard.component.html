@@ -1,0 +1,83 @@
+<app-breadcrumb titulo="Dashboard" [menu]="menu"></app-breadcrumb>
+<div class="container-fluid">
+    <div class="row">
+        <div class="btn-group d-flex justify-content-center mb-4 col-12" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-secondary" [ngClass]="{'active': viewType === 0}" (click)="changeView(0)">Diario</button>
+            <button type="button" class="btn btn-secondary" [ngClass]="{'active': viewType === 1}" (click)="changeView(1)">Mensual</button>
+        </div>
+        <div class="col-12">
+            <div class="card-group">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <h2 class="m-b-0"><i class="mdi mdi-briefcase-check text-info"></i></h2>
+                                <h3 class="">{{ dashboard.entradas }}</h3>
+                                <h6 *ngIf="viewType === 0" class="card-subtitle">Total de Accesos Diarios</h6>
+                                <h6 *ngIf="viewType === 1" class="card-subtitle">Total de Accesos Mensuales</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <h2 class="m-b-0"><i class="mdi mdi-alert-circle text-success"></i></h2>
+                                <h3 class="">{{ dashboard.socios }}</h3>
+                                <h6 *ngIf="viewType === 0" class="card-subtitle">Total Acceso de Socios Diario</h6>
+                                <h6 *ngIf="viewType === 1" class="card-subtitle">Total Accesos de Socios Mensual</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <h2 class="m-b-0"><i class="mdi mdi-wallet text-purple"></i></h2>
+                                <h3 class="">{{ dashboard.invitados }}</h3>
+                                <h6 *ngIf="viewType === 0" class="card-subtitle">Total Acceso de Invitados Diario</h6>
+                                <h6 *ngIf="viewType === 1" class="card-subtitle">Total Accesos de Invitados Mensual</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <h2 class="m-b-0"><i class="mdi mdi-buffer text-warning"></i></h2>
+                                <h3 class="">{{ dashboard.proveedores }}</h3>
+                                <h6 *ngIf="viewType === 0" class="card-subtitle">Total Acceso de Proveedores Diario</h6>
+                                <h6 *ngIf="viewType === 1" class="card-subtitle">Total Accesos de Proveedores Mensual</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 id="faces_detected" class="card-title">Total de accesos clasificados por Tipos de Usuario</h4>
+                    <div id="bar-chart" class="graphs"></div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h4 id="faces_detected" class="card-title">Total de Accesos Diarios</h4>
+                    <h6 id="graph_faces_detected" class="card-subtitle">Gráfica del total de personas que accedieron por hora</h6>
+                    <div id="line-day-chart" class="graphs"></div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h4 id="faces_detected" class="card-title">Total de Accesos Del Mes</h4>
+                    <h6 id="graph_faces_detected" class="card-subtitle">Gráfica del total de personas que accedieron mensualmente</h6>
+                    <div id="line-month-chart" class="graphs"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

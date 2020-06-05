@@ -1,0 +1,136 @@
+<app-breadcrumb titulo="Administradores" [menu]="menu"></app-breadcrumb>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Lista de Administradores</h4>
+            <button class="btn btn-dark" (click)="openAdmin(contentAdmin)">Crear nuevo Administrador</button>
+            <div class="form-group col-md-4 m-t-20" style="display: inline-flex;float:right">
+                <input type="text" class="form-control" name="filterName" placeholder="Buscar por nombres..."
+                 [(ngModel)]="filterName">
+            </div>
+            <h6 class="card-subtitle"></h6>
+            <div class="table-responsive m-t-40">
+                <table id="myTable" class="table color-bordered-table inverse-bordered-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Usuario</th>
+                            <th>Correo</th>
+                            <th>Rol</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let admin of admins | filter:filterName; let i=index ">
+                            <th scope="row ">{{i+1}}</th>
+                            <td>{{admin.nombres}}</td>
+                            <td>{{admin.usuario}}</td>
+                            <td>{{admin.correo}}</td>
+                            <td>{{admin.rol.nombres}}</td>
+                            <td>
+                                <a data-toggle="tooltip" data-original-title="Editar" (click)="openAdmin(contentAdmin, admin)"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                                <a data-toggle="tooltip" data-original-title="Eliminar" (click)="delete(admin.id_administrador)"> <i class="fa fa-trash text-danger m-r-10"></i> </a>
+                                <a data-toggle="tooltip" data-original-title="Accesos" (click)="openAcceso(contentAcceso,admin)"> <i class="fas fa-key m-r-10" style="color: goldenrod;"></i> </a>
+
+                            </td>
+                        </tr>
+
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <ng-template #contentAdmin let-modal>
+        <div class="modal-header">
+            <h4 *ngIf="!admin.edit" class="modal-title" id="modal-basic-title">Crear nuevo Administrador</h4>
+            <h4 *ngIf="admin.edit" class="modal-title" id="modal-basic-title">Editar nuevo Administrador</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form (ngSubmit)="gestionAdmin()" #form="ngForm">
+            <div class="modal-body">
+                <div class="form-group">
+                    <input [value]="admin.nombres" [(ngModel)]="admin.nombres" name="nombres" class="form-control" type="text" required placeholder="Ingrese el nombre">
+                </div>
+                <div class="form-group">
+                    <input [value]="admin.correo" [(ngModel)]="admin.correo" name="correo" class="form-control" type="text" required placeholder="Ingrese el Correo">
+                </div>
+                <div *ngIf="!admin.edit" class="form-group">
+                    <input [value]="admin.clave" [(ngModel)]="admin.clave" name="clave" class="form-control" type="text" required placeholder="Ingrese la clave">
+                </div>
+                <div class="form-group">
+                    <input [value]="admin.usuario" [(ngModel)]="admin.usuario" name="usuario" class="form-control" type="text" required placeholder="Ingrese la usuario">
+                </div>
+                <div class="form-group">
+                    <label>Rol a asignar</label>
+                    <select name="rol" [(ngModel)]="admin.rol" class="form-control custom-select">
+                        <option *ngFor="let rol of roles" [value]="rol.id_rol">{{ rol.nombres }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button *ngIf="!auth.loading" [disabled]="!form.valid" type="submit" class="btn btn-outline-dark">
+                    <span *ngIf="!admin.edit">Guardar</span>
+                    <span *ngIf="admin.edit">Editar</span>
+                </button>
+                <i *ngIf="auth.loading" class="fa fa-spinner fa-spin fa-2x"></i>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #contentAcceso let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Asignar Accesos al Administrador</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form (ngSubmit)="AsignarAcceso()" #form="ngForm">
+            <div class="modal-body">
+                <div class="form-group">
+                    <input style="display: none;" [value]="admin.id_administrador" [(ngModel)]="admin.id_administrador" name="id_administrador" class="form-control" type="text" required placeholder="">
+                    
+                   
+                        <label>Accesos a asignar</label>
+                        <ng-select
+                        placeholder="Seleccionar los Accesos"
+                        appendTo="body"
+                        multiple="true"
+                        [searchable]="true"
+                        [(ngModel)]="acceso.accesos" name="accesos">
+                            <ng-option *ngFor="let ac of accesos" [value]="ac.id_acceso">{{ac.nombres}}</ng-option>
+                        </ng-select>
+                    
+                </div>
+                <div class="table-responsive m-t-40">
+                    <table id="myTable" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                
+                                    <th>#</th>
+                                    <th>Nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let a of adminaccess; let i=index ">
+                                    <th scope="row ">{{ i+1 }}</th>
+                                    <td>{{a.nombres}}</td>
+                                  
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+                <div class="modal-footer">
+                    <button *ngIf="!auth.loading" [disabled]="!form.valid" type="submit" class="btn btn-outline-dark">
+                        <span >Guardar</span>
+                    </button>
+                    <i *ngIf="auth.loading" class="fa fa-spinner fa-spin fa-2x"></i>
+                </div>
+            </form>
+        </ng-template>
+
+</div>

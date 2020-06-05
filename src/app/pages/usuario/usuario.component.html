@@ -1,0 +1,75 @@
+<app-breadcrumb titulo="Usuarios" [menu]="menu"></app-breadcrumb>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Lista de Usuarios</h4>
+            <button class="btn btn-dark" (click)="openUser(contentUser)">Crear nuevo Usuario</button>
+            <div class="form-group col-md-4 m-t-20" style="display: inline-flex;float:right">
+                <input type="text" class="form-control" name="filterName" placeholder="Buscar por nombres..."
+                 [(ngModel)]="filterName">
+            </div>
+            <h6 class="card-subtitle"></h6>
+            <div class="table-responsive m-t-40">
+                <table id="myTable" class="table color-bordered-table inverse-bordered-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombres</th>
+                            <th>DNI</th>
+                            <th>Tipo de Usuario</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of users | filter:filterName;  let i=index ">
+                            <th scope="row ">{{ i+1 }}</th>
+                            <td>{{user.nombres}}</td>
+                            <td>{{user.dni}}</td>
+                            <td></td>
+                            <td>
+                                <a data-toggle="tooltip" data-original-title="Editar" (click)="openUser(contentUser, user)"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                                <a data-toggle="tooltip" data-original-title="Eliminar" (click)="delete(user.id_usuario)"> <i class="fa fa-trash text-danger m-r-10"></i> </a>
+                            
+                            </td>
+                        </tr>
+
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <ng-template #contentUser let-modal>
+        <div class="modal-header">
+            <h4 *ngIf="!user.edit" class="modal-title" id="modal-basic-title">Crear nuevo Usuario</h4>
+            <h4 *ngIf="user.edit" class="modal-title" id="modal-basic-title">Editar nuevo Usuario</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form (ngSubmit)="gestionUser()" #form="ngForm">
+            <div class="modal-body">
+                <div class="form-group">
+                    <input [value]="user.nombres" [(ngModel)]="user.nombres" name="nombres" class="form-control" type="text" required placeholder="Ingrese el nombre">
+                </div>
+                <div class="form-group">
+                    <input [value]="user.dni" [(ngModel)]="user.dni" name="dni" class="form-control" type="text" required placeholder="Ingrese su DNI">
+                </div>
+                <div class="form-group">
+                    <label>Tipo de Usuario a asignar</label>
+                    <select name="id_tipo" [(ngModel)]="user.id_tipo" class="form-control custom-select">
+                        <option *ngFor="let tip of tipos" [value]="tip.id_tipo">{{ tip.nombres }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button *ngIf="!auth.loading" [disabled]="!form.valid" type="submit" class="btn btn-outline-dark">
+                    <span *ngIf="!user.edit">Guardar</span>
+                    <span *ngIf="user.edit">Editar</span>
+                </button>
+                <i *ngIf="auth.loading" class="fa fa-spinner fa-spin fa-2x"></i>
+            </div>
+        </form>
+    </ng-template>
+</div>
