@@ -24,7 +24,7 @@ export class UsuarioComponent implements OnInit {
 
   menu = ['Usuarios'];
 
-  constructor(private auth: AuthService,
+  constructor(public auth: AuthService,
               private router: Router,
               private modalService: NgbModal) { }
 

@@ -10,14 +10,14 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./topbar.component.css']
 })
 export class TopbarComponent implements OnInit {
-masters: UsuarioModelo[] =[]; 
+masters = [];
   constructor(private auth: AuthService,
-    private router: Router,
-    private modalService: NgbModal,) { }
+              private router: Router,
+              private modalService: NgbModal) { }
 
 
   ngOnInit() {
-    const infomaster = localStorage.getItem("info");
+    const infomaster = localStorage.getItem('info');
     this.masters = [JSON.parse(infomaster)];
   }
 

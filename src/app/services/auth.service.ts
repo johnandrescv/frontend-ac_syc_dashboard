@@ -35,7 +35,7 @@ login(body: FormData) {
    body
  ).pipe(
    map( (resp: any) => {
-     if(resp.administrador.rol.nombres == 'Master' || resp.administrador.rol.nombres == 'Administrador'){
+     if (resp.administrador.rol.nombres === 'Master' || resp.administrador.rol.nombres === 'Administrador') {
      this.guardarToken( resp.administrador);
      return resp;
      }
@@ -46,7 +46,7 @@ login(body: FormData) {
 private guardarToken( idToken: any) {
  this.userToken = idToken.api_key;
  this.info = JSON.stringify(idToken);
- this.infoGuard = idToken["rol"]["id_rol"];
+ this.infoGuard = idToken.rol.id_rol;
  localStorage.setItem('token', idToken.api_key);
  localStorage.setItem('info', JSON.stringify(idToken));
 }
@@ -295,7 +295,7 @@ deleteAcceso(id: number) {
   });
 }
 
-AsignarAcceso(data: FormData, id:any) {
+AsignarAcceso(data: FormData, id: any) {
   this.loading = true;
   const headers = new HttpHeaders({
     token: this.userToken
@@ -313,51 +313,46 @@ AsignarAcceso(data: FormData, id:any) {
   });
 }
 
-// LOGS
-getLogs(params:string) {
-  const headers = new HttpHeaders({
-    token: this.userToken
-  });
-  return new Promise(resolve => {
-    this.http.get(`${environment.apiUrl}/logs?${params}`,{ headers } ).subscribe((response: any) => {
-      this.loading = false;
-      resolve([true, response.registros]);
-    }, (error: any) => {
-      this.loading = false;
-      this.showAlert(error.error.message, 'error');
-      resolve([false]);
+  // LOGS
+  getLogs(params: string) {
+    const headers = new HttpHeaders({
+      token: this.userToken
     });
-  });
-}
-
-// HISTORIAL
-getHistorial(params:string) {
-  const headers = new HttpHeaders({
-    token: this.userToken
-  });
-  return new Promise(resolve => {
-    this.http.get(`${environment.apiUrl}/historial?${params}`,{ headers } ).subscribe((response: any) => {
-      this.loading = false;
-      resolve([true, response.registros]);
-    }, (error: any) => {
-      this.loading = false;
-      this.showAlert(error.error.message, 'error');
-      resolve([false]);
+    return new Promise(resolve => {
+      this.http.get(`${environment.apiUrl}/logs?${params}`, { headers } ).subscribe((response: any) => {
+        this.loading = false;
+        resolve([true, response.registros]);
+      }, (error: any) => {
+        this.loading = false;
+        this.showAlert(error.error.message, 'error');
+        resolve([false]);
+      });
     });
-  });
-}
+  }
 
+  // HISTORIAL
+  getHistorial(params: string) {
+    const headers = new HttpHeaders({
+      token: this.userToken
+    });
+    return new Promise(resolve => {
+      this.http.get(`${environment.apiUrl}/historial?${params}`, { headers } ).subscribe((response: any) => {
+        this.loading = false;
+        resolve([true, response.registros]);
+      }, (error: any) => {
+        this.loading = false;
+        this.showAlert(error.error.message, 'error');
+        resolve([false]);
+      });
+    });
+  }
 
-
-
-showAlert(message: string, tipo: any, confirmBtnText: string = 'Intentar nuevamente') {
-  Swal.fire({
-    title: 'Datos Correctos',
-    text: message,
-    icon: tipo,
-    confirmButtonText: confirmBtnText
-  });
-}
-
-  
+  showAlert(message: string, tipo: any, confirmBtnText: string = 'Intentar nuevamente') {
+      Swal.fire({
+        title: 'Datos Correctos',
+        text: message,
+        icon: tipo,
+        confirmButtonText: confirmBtnText
+      });
+  }
 }
