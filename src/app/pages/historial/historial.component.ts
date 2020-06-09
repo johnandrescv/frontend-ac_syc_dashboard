@@ -12,9 +12,9 @@ import * as moment from 'moment';
   styleUrls: ['./historial.component.css']
 })
 export class HistorialComponent implements OnInit {
-  historiales: UsuarioModelo[] = [];
-  admins: UsuarioModelo[] = [];
-  users: UsuarioModelo[] = [];
+  historiales = [];
+  admins = [];
+  users = [];
   loading = false;
   moreData = true;
   historial = {
@@ -27,8 +27,8 @@ export class HistorialComponent implements OnInit {
 
   menu = ['Historial'];
   constructor(private auth: AuthService,
-    private router: Router,
-    private modalService: NgbModal, ) { }
+              private router: Router,
+              private modalService: NgbModal) { }
 
   ngOnInit() {
     this.auth.getAdmin()
@@ -41,17 +41,17 @@ export class HistorialComponent implements OnInit {
     });
   }
 
-  openHistorial(content, historial) {
+  openHistorial(content) {
     this.modalService.open(content, { size: 'lg'});
   }
 
   async gestionHistorial() {
-    let params = this.setParams();
+    const params = this.setParams();
     let response: any;
-      response = await this.auth.getHistorial(params);
-      this.historiales = [ response[1]];
-      this.modalService.dismissAll();
-    
+    response = await this.auth.getHistorial(params);
+    this.historiales = response[1];
+    this.modalService.dismissAll();
+
   }
 
   setParams() {

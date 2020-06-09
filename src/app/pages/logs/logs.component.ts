@@ -11,17 +11,17 @@ import * as moment from 'moment';
   styleUrls: ['./logs.component.css']
 })
 export class LogsComponent implements OnInit {
-  logs: UsuarioModelo[] = [];
-  admins: UsuarioModelo[] = [];
-  accesos: UsuarioModelo[] = [];
+  logs  = [];
+  admins = [];
+  accesos = [];
   loading = false;
   moreData = true;
   log = {
     administrador: 0,
     acceso: 0,
     fecha_inicio: '',
-    fecha_fin:'',
-    pagina:0,
+    fecha_fin: '',
+    pagina: 0,
     valid : true,
   };
   menu = ['Registro de Apertura'];
@@ -40,7 +40,7 @@ export class LogsComponent implements OnInit {
       });
   }
 
-  openLog(content, log) {
+  openLog(content) {
     this.modalService.open(content, { size: 'lg'});
   }
 
@@ -48,8 +48,7 @@ export class LogsComponent implements OnInit {
     const params = this.setParams();
     let response: any;
     response = await this.auth.getLogs(params);
-    this.logs = [ response[1]];
-    console.log(this.logs);
+    this.logs = response[1];
     this.modalService.dismissAll();
 
   }

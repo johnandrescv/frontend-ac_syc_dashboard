@@ -23,7 +23,7 @@ export class AccesoComponent implements OnInit {
 
   menu = ['Accesos'];
 
-  constructor(private auth: AuthService,
+  constructor(public auth: AuthService,
               private router: Router,
               private modalService: NgbModal, ) { }
 
