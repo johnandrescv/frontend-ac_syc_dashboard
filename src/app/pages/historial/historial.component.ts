@@ -21,8 +21,8 @@ export class HistorialComponent implements OnInit {
     administrador: 0,
     tipo_usuario: 0,
     fecha_inicio: '',
-    fecha_fin:'',
-    pagina:0,
+    fecha_fin: '',
+    pagina: 0,
   };
 
   menu = ['Historial'];
