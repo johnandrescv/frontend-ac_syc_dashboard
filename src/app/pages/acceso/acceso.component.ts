@@ -19,6 +19,7 @@ export class AccesoComponent implements OnInit {
     is_salida: '',
     edit: false,
     url: '',
+    camara: ''
   };
 
   menu = ['Accesos'];
@@ -38,6 +39,7 @@ export class AccesoComponent implements OnInit {
       this.acceso.url = acceso.url;
       this.acceso.is_salida = acceso.is_salida;
       this.acceso.nombres = acceso.nombres;
+      this.acceso.camara = acceso.camara;
       this.acceso.edit = true;
     } else {
       this.acceso.id_acceso = 0;
@@ -45,6 +47,7 @@ export class AccesoComponent implements OnInit {
       this.acceso.url = '';
       this.acceso.is_salida = '';
       this.acceso.nombres = '';
+      this.acceso.camara = '';
       this.acceso.edit = false;
     }
     this.modalService.open(content);
@@ -61,12 +64,13 @@ export class AccesoComponent implements OnInit {
   async gestionAcceso() {
     let response: any;
     if (this.acceso.edit) {
-      const body = `nombres=${this.acceso.nombres}&ip=${this.acceso.ip}&is_salida=${this.acceso.is_salida}&url=${this.acceso.url}`;
+      const body = `nombres=${this.acceso.nombres}&camara=${this.acceso.camara}&ip=${this.acceso.ip}&is_salida=${this.acceso.is_salida}&url=${this.acceso.url}`;
       response = await this.auth.editAcceso(this.acceso.id_acceso, body);
     } else {
       const body = new FormData();
       body.append('ip', this.acceso.ip);
       body.append('url', this.acceso.url);
+      body.append('camara', this.acceso.camara);
       body.append('is_salida', this.acceso.is_salida);
       body.append('nombres', this.acceso.nombres);
       response = await this.auth.createAcceso(body);
