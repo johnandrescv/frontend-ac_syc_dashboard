@@ -25,7 +25,11 @@
                             <th scope="row ">{{ i+1 }}</th>
                             <td>{{user.nombres}}</td>
                             <td>{{user.dni}}</td>
-                            <td></td>
+                            <td>
+                               <span class="badge badge-info" *ngIf="user.tipo.id_tipo === 1">{{user.tipo.nombres}}</span> 
+                               <span class="badge badge-warning" *ngIf="user.tipo.id_tipo === 2">{{user.tipo.nombres}}</span> 
+                               <span class="badge badge-danger" *ngIf="user.tipo.id_tipo === 3">{{user.tipo.nombres}}</span>
+                            </td>
                             <td>
                                 <a data-toggle="tooltip" data-original-title="Editar" (click)="openUser(contentUser, user)"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
                                 <a data-toggle="tooltip" data-original-title="Eliminar" (click)="delete(user.id_usuario)"> <i class="fa fa-trash text-danger m-r-10"></i> </a>
