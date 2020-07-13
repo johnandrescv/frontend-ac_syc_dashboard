@@ -16,6 +16,7 @@ export class UsuarioComponent implements OnInit {
   filterName = '';
   user = {
     id_usuario: 0,
+    imagen: null,
     dni: '',
     nombres: '',
     edit: false,
@@ -40,12 +41,14 @@ export class UsuarioComponent implements OnInit {
   openUser(content, user = null) {
     if (user) {
       this.user.id_usuario = user.id_usuario;
+      this.user.imagen = (user.imagen === '') ? null : user.imagen;
       this.user.dni = user.dni;
       this.user.id_tipo = user.tipo.id_tipo;
       this.user.nombres = user.nombres;
       this.user.edit = true;
     } else {
       this.user.id_usuario = 0;
+      this.user.imagen = null;
       this.user.dni = '';
       this.user.nombres = '';
       this.user.id_tipo = '';
