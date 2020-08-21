@@ -14,8 +14,8 @@
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Cédula</th>
                             <th>Nombres</th>
-                            <th>DNI</th>
                             <th>Tipo de Usuario</th>
                             <th>Acciones</th>
                         </tr>
@@ -23,8 +23,8 @@
                     <tbody>
                         <tr *ngFor="let user of users | filter:filterName;  let i=index ">
                             <th scope="row ">{{ i+1 }}</th>
-                            <td>{{user.nombres}}</td>
                             <td>{{user.dni}}</td>
+                            <td>{{user.nombres}}</td>
                             <td>
                                <span class="badge badge-info" *ngIf="user.tipo.id_tipo === 1">{{user.tipo.nombres}}</span> 
                                <span class="badge badge-warning" *ngIf="user.tipo.id_tipo === 2">{{user.tipo.nombres}}</span> 

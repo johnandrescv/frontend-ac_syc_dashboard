@@ -6,11 +6,11 @@ interface Scripts {
 }
 
 export const ScriptStore: Scripts[] = [
-  { name: 'slimscroll', src: '../../../assets/secondary/js/jquery.slimscroll.js' },
-  { name: 'sidebarmenu', src: '../../../assets/secondary/js/sidebarmenu.js' },
-  { name: 'sticky', src: '../../../assets/secondary/js/sticky-kit.min.js' },
-  { name: 'sparkline', src: '../../../assets/secondary/js/custom.min.js' },
-  { name: 'custom', src: '../../../assets/secondary/js/jquery.sparkline.min.js' },
+  { name: 'slimscroll', src: './assets/secondary/js/jquery.slimscroll.js' },
+  { name: 'sidebarmenu', src: './assets/secondary/js/sidebarmenu.js' },
+  { name: 'sticky', src: './assets/secondary/js/sticky-kit.min.js' },
+  { name: 'sparkline', src: './assets/secondary/js/custom.min.js' },
+  { name: 'custom', src: './assets/secondary/js/jquery.sparkline.min.js' },
 ];
 
 declare var document: any;

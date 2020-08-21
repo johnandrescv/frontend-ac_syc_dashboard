@@ -16,6 +16,7 @@ export class DashboardComponent implements AfterViewInit, OnInit, OnDestroy {
   menu = ['Dashboard'];
   chart: am4charts.XYChart;
   dashboard = {
+    unicos_entradas: 0,
     entradas: 0,
     salidas: 0,
     socios: 0,
