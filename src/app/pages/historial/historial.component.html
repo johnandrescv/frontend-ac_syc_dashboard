@@ -17,7 +17,9 @@
                             <th>Nombres</th>
                             <th>Tipo</th>
                             <th>Autorización</th>
-                            <th>Fecha</th>
+                            <th>Tiempo dentro del Club</th>
+                            <th>Fecha Acceso</th>
+                            <th>Fecha Salida</th>
                             <th>Portero</th>
                             <th>Acceso</th>
                         </tr>
@@ -25,14 +27,22 @@
                     <tbody>
                         <tr *ngFor="let his of historiales">
                             <td>{{his.usuario.dni}}</td>
-                            <td>{{his.usuario.nombres}}</td>
+                            <td>{{his.usuario.nombres}} <span class="badge badge-purple">
+                                {{his.usuario.socio_status}}
+                            </span>
+                            </td>
                             <td>
                                 <span class="badge" [ngClass]="{'badge-success': his.usuario.tipo.id_tipo === 1, 'badge-info': his.usuario.tipo.id_tipo === 2, 'badge-warning': his.usuario.tipo.id_tipo === 3}">
                                     {{his.usuario.tipo.nombres}}
                                 </span>
+                                <span class="badge badge-purple">
+                                    {{his.usuario.parentesco}}
+                                </span>
                             </td>
                             <td>{{his.autorizacion.nombres}}</td>
+                            <td><span *ngIf="his.fecha_salida">{{his.fecha_salida | diff: his.fecha_entrada}}</span><span *ngIf="!his.fecha_salida">Sin Salida</span></td>
                             <td>{{his.fecha_entrada | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}</td>
+                            <td><span *ngIf="his.fecha_salida">{{his.fecha_salida | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}</span><span *ngIf="!his.fecha_salida">Sin Salida</span></td>
                             <td>{{his.administrador.nombres}}</td>
                             <td>{{his.acceso.nombres}}</td>
                         </tr>

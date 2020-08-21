@@ -26,6 +26,7 @@ import { FilterPipe } from './pipes/filter.pipe';
 import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-datetimepicker';
 import { HistorialComponent } from './pages/historial/historial.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { DiffPipe } from './pipes/diff.pipe';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
     FilterPipe,
     HistorialComponent,
     DashboardComponent,
+    DiffPipe,
   ],
   imports: [
     BrowserModule,
