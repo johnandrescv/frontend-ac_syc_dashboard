@@ -24,7 +24,8 @@ export class HistorialComponent implements OnInit {
     fecha_fin: '',
     pagina: 0,
   };
-
+  fechainicio = '';
+  fechafin = '';
   menu = ['Historial'];
   constructor(private auth: AuthService,
               private router: Router,
@@ -35,10 +36,11 @@ export class HistorialComponent implements OnInit {
     .subscribe( (resp: any) => {
       this.admins.push(...resp);
     });
-    this.auth.getUser()
+    this.auth.getTypeUser()
     .subscribe( (resp: any) => {
       this.users.push(...resp);
     });
+    this.gestionHistorial();
   }
 
   openHistorial(content) {
@@ -51,17 +53,24 @@ export class HistorialComponent implements OnInit {
     response = await this.auth.getHistorial(params);
     this.historiales = response[1];
     this.modalService.dismissAll();
-
   }
 
   setParams() {
-    const fechainicio = moment(this.historial.fecha_inicio).format('YYYY-MM-DD');
-    const fechafin = moment(this.historial.fecha_fin).format('YYYY-MM-DD');
-    let params = `fecha_inicio=${fechainicio}&fecha_fin=${fechafin}&pagina=${this.historial.pagina}`;
+    this.fechainicio = moment(this.historial.fecha_inicio).format('YYYY-MM-DD');
+    this.fechafin = moment(this.historial.fecha_fin).format('YYYY-MM-DD');
+
+    if (this.historial.fecha_inicio === '') {
+      this.fechainicio = moment().format('YYYY-MM-DD');
+    }
+    if (this.historial.fecha_fin === '') {
+      this.fechafin = moment().format('YYYY-MM-DD');
+    }
+    
+    let params = `fecha_inicio=${this.fechainicio}&fecha_fin=${this.fechafin}&pagina=${this.historial.pagina}`;
+  
     if (this.historial.administrador !== 0) {
       params += `&administrador=${this.historial.administrador.toString()}`;
     }
-
     if (this.historial.tipo_usuario !== 0) {
       params += `&tipo_usuario=${this.historial.tipo_usuario.toString()}`;
     }
