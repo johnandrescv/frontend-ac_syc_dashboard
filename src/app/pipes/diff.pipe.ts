@@ -7,10 +7,8 @@ import * as moment from 'moment';
 export class DiffPipe implements PipeTransform {
 
   transform(value: any, args: any): any {
-    const ms = moment(value,"DD/MM/YYYY HH:mm:ss").diff(moment(args,"DD/MM/YYYY HH:mm:ss"));
-    const d = moment.duration(ms);
-    const s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
-    return s;
+    const diff = moment.duration(moment(value, 'YYYY-MM-DD HH:mm:ss').diff(moment(args, 'YYYY-MM-DD HH:mm:ss')));
+    return `${diff.asHours().toFixed(0)}h${diff.minutes().toFixed(0)}m${diff.seconds().toFixed(0)}s`;
   }
 
 }
