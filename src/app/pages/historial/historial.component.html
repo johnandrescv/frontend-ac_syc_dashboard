@@ -22,6 +22,7 @@
                             <th>Fecha Salida</th>
                             <th>Portero</th>
                             <th>Acceso</th>
+                            <th>Observación</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,6 +46,7 @@
                             <td><span *ngIf="his.fecha_salida">{{his.fecha_salida | amDateFormat:'MMMM DD YYYY, HH:mm:ss'}}</span><span *ngIf="!his.fecha_salida">Sin Salida</span></td>
                             <td>{{his.administrador.nombres}}</td>
                             <td>{{his.acceso.nombres}}</td>
+                            <td>{{his.descripcion}}</td>
                         </tr>
                     </tbody>
                 </table>
