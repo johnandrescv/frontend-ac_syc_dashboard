@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./acceso.component.css']
 })
 export class AccesoComponent implements OnInit {
-  accesos: UsuarioModelo[] = [];
+  accesos = [];
   acceso = {
     id_acceso: 0,
     ip: '',
@@ -54,8 +54,7 @@ export class AccesoComponent implements OnInit {
   }
 
   getAcceso() {
-    this.auth.getAcceso()
-    .subscribe( (resp: any) => {
+    this.auth.getAcceso().subscribe( (resp: any) => {
       this.accesos = resp;
     });
   }

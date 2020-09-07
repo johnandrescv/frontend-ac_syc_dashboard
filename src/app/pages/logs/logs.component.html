@@ -26,9 +26,6 @@
                             <td>{{log.fecha_creacion | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}</td>
                             <td>{{log.acceso.nombres}}</td>
                         </tr>
-
-
-
                     </tbody>
                 </table>
                 <div *ngIf="logs.length === 0" class="d-flex justify-content-center"><label>No existen datos</label></div>
