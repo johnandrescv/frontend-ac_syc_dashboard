@@ -11,9 +11,13 @@ import Swal from 'sweetalert2';
   styleUrls: ['./usuario.component.css']
 })
 export class UsuarioComponent implements OnInit {
-  users: UsuarioModelo[] = [];
-  tipos: UsuarioModelo[] = [];
+  users = [];
+  backup = [];
+  tipos = [];
   filterName = '';
+  loading = false;
+  moreData = true;
+  page = 0;
   user = {
     id_usuario: 0,
     imagen: null,
@@ -58,10 +62,20 @@ export class UsuarioComponent implements OnInit {
   }
 
   getUser() {
-    this.auth.getUser()
-    .subscribe( (resp: any) => {
-      this.users = resp;
+    this.loading = true;
+    this.auth.getUser(this.page).subscribe( (resp: any) => {
+      if (resp.length === 0) {
+        this.moreData = false;
+      }
+      this.users = [...this.users, ...resp];
+      this.backup = this.users;
+      this.loading = false;
     });
+  }
+
+  nextPageUser() {
+    this.page = this.page+1;
+    this.getUser();
   }
 
 
@@ -108,4 +122,19 @@ export class UsuarioComponent implements OnInit {
     }
   }
 
+  async textSearch() {
+    this.users = [];
+    if (this.filterName.length === 0 ) {
+      this.users = this.backup;
+      return;
+    }
+
+    this.loading = true
+    const body = new FormData();
+    body.append('texto', this.filterName);
+    this.auth.searchUser(body).subscribe( (resp: any) => {
+      this.users = resp;
+      this.loading = false;
+    });
+  }
 }

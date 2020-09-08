@@ -158,11 +158,11 @@ getTypeUser() {
 }
 
 // USUARIO
-getUser() {
+getUser(page: number) {
   const headers = new HttpHeaders({
     token: this.userToken
   });
-  return this.http.get(`${environment.apiUrl}/usuarios`, {headers})
+  return this.http.get(`${environment.apiUrl}/usuarios?pagina=${page}`, {headers})
   .pipe(
     map( (resp: any) => {
       return resp.usuarios;
@@ -170,6 +170,17 @@ getUser() {
   );
 }
 
+searchUser(body: FormData) {
+  const headers = new HttpHeaders({
+    token: this.userToken
+  });
+  return this.http.post(`${environment.apiUrl}/usuarios/search`, body, {headers})
+  .pipe(
+    map( (resp: any) => {
+      return resp.usuarios;
+    })
+  );
+}
 
 createUser(data: FormData) {
   this.loading = true;

@@ -4,9 +4,9 @@
         <div class="card-body">
             <h4 class="card-title">Lista de Usuarios</h4>
             <button class="btn btn-dark" (click)="openUser(contentUser)">Crear nuevo Usuario</button>
-            <div class="form-group col-md-4 m-t-20" style="display: inline-flex;float:right">
-                <input type="text" class="form-control" name="filterName" placeholder="Buscar por nombres..."
-                 [(ngModel)]="filterName">
+            <div class="form-group col-md-6 m-t-20" style="display: inline-flex;float:right">
+                <input type="text" class="form-control mr-2" name="filterName" placeholder="Buscar por nombres..."
+                 [(ngModel)]="filterName"><button class="btn btn-outline btn-small" (click)="textSearch()">Buscar</button>
             </div>
             <h6 class="card-subtitle"></h6>
             <div class="table-responsive m-t-40">
@@ -21,12 +21,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let user of users | filter:filterName;  let i=index ">
+                        <tr *ngFor="let user of users; let i=index">
                             <th scope="row ">{{ i+1 }}</th>
                             <td>{{user.dni}}</td>
                             <td>{{user.nombres}}</td>
                             <td>
                                <span class="badge badge-info" *ngIf="user.tipo.id_tipo === 1">{{user.tipo.nombres}}</span> 
+                               <span class="badge badge-secondary ml-2" *ngIf="user.tipo.id_tipo === 1 && user.parentesco !== 'SOCIO'">{{user.parentesco}}</span> 
+                               <span class="badge badge-success ml-2" *ngIf="user.tipo.id_tipo === 1">{{user.socio_status}}</span> 
                                <span class="badge badge-warning" *ngIf="user.tipo.id_tipo === 2">{{user.tipo.nombres}}</span> 
                                <span class="badge badge-danger" *ngIf="user.tipo.id_tipo === 3">{{user.tipo.nombres}}</span>
                             </td>
@@ -37,6 +39,10 @@
                         </tr>
                     </tbody>
                 </table>
+                <div *ngIf="users.length >= 50 && !loading && moreData" class="d-flex justify-content-center">
+                    <button class="btn btn-info mr-2" (click)="nextPageUser()">Ver más Registros</button>
+                </div>
+                <div *ngIf="loading" class="d-flex justify-content-center"><i class="fa fa-spinner fa-spin fa-2x"></i></div>
             </div>
         </div>
     </div>
