@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Select2Option } from 'src/app/models/interface';
 import * as moment from 'moment';
+import { ExcelService } from '../../services/excel.service';
 
 @Component({
   selector: 'app-historial',
@@ -28,7 +29,7 @@ export class HistorialComponent implements OnInit {
   fechafin = '';
   menu = ['Historial'];
   constructor(private auth: AuthService,
-              private router: Router,
+              private excelServ: ExcelService,
               private modalService: NgbModal) { }
 
   ngOnInit() {
@@ -65,9 +66,9 @@ export class HistorialComponent implements OnInit {
     if (this.historial.fecha_fin === '') {
       this.fechafin = moment().format('YYYY-MM-DD');
     }
-    
+
     let params = `fecha_inicio=${this.fechainicio}&fecha_fin=${this.fechafin}&pagina=${this.historial.pagina}`;
-  
+
     if (this.historial.administrador !== 0) {
       params += `&administrador=${this.historial.administrador.toString()}`;
     }
@@ -90,5 +91,9 @@ export class HistorialComponent implements OnInit {
       }
     }
     this.loading = false;
+  }
+
+  downloadExcel() {
+    this.excelServ.exportAsExcelFile(this.historiales, 'sample');
   }
 }

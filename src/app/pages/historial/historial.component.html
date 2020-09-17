@@ -4,6 +4,7 @@
         <div class="card-body">
             <h4 class="card-title">Listado de Historial</h4>
             <button class="btn btn-dark mr-2" (click)="openHistorial(content)">Agregar Filtros</button>
+            <button class="btn btn-info mr-2" (click)="downloadExcel()">Descargar Excel</button>
             <div class="col-12 mt-3">
                 <label>Desde <code>{{ fechainicio | amDateFormat:'DD-MM-YYYY' }}</code> hasta <code>{{ fechafin | amDateFormat:'DD-MM-YYYY' }}</code></label>
             </div>
