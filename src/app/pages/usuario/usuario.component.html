@@ -17,6 +17,7 @@
                             <th>Cédula</th>
                             <th>Nombres</th>
                             <th>Tipo de Usuario</th>
+                            <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -33,8 +34,12 @@
                                <span class="badge badge-danger" *ngIf="user.tipo.id_tipo >= 3">{{user.tipo.nombres}}</span>
                             </td>
                             <td>
-                                <a data-toggle="tooltip" data-original-title="Editar" (click)="openUser(contentUser, user)"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
-                                <!-- <a data-toggle="tooltip" data-original-title="Eliminar" (click)="delete(user.id_usuario)"> <i class="fa fa-trash text-danger m-r-10"></i> </a> -->
+                               <span class="badge badge-success" *ngIf="user.tipo.id_tipo >= 3">Activo</span>
+                               <span class="badge badge-danger" *ngIf="user.tipo.id_tipo >= 3">Eliminado</span>
+                            </td>
+                            <td>
+                                <a *ngIf="user.tipo.id_tipo >= 2" data-toggle="tooltip" data-original-title="Editar" (click)="openUser(contentUser, user)"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                                <a *ngIf="user.tipo.id_tipo >= 2" data-toggle="tooltip" data-original-title="Eliminar" (click)="delete(user.id_usuario)"> <i class="fa fa-trash text-danger m-r-10"></i> </a>
                             </td>
                         </tr>
                     </tbody>
