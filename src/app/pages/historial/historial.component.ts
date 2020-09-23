@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Select2Option } from 'src/app/models/interface';
 import * as moment from 'moment';
+import { ExcelService } from '../../services/excel.service';
 
 @Component({
   selector: 'app-historial',
@@ -28,7 +29,7 @@ export class HistorialComponent implements OnInit {
   fechafin = '';
   menu = ['Historial'];
   constructor(private auth: AuthService,
-              private router: Router,
+              private excelServ: ExcelService,
               private modalService: NgbModal) { }
 
   ngOnInit() {
@@ -65,9 +66,9 @@ export class HistorialComponent implements OnInit {
     if (this.historial.fecha_fin === '') {
       this.fechafin = moment().format('YYYY-MM-DD');
     }
-    
+
     let params = `fecha_inicio=${this.fechainicio}&fecha_fin=${this.fechafin}&pagina=${this.historial.pagina}`;
-  
+
     if (this.historial.administrador !== 0) {
       params += `&administrador=${this.historial.administrador.toString()}`;
     }
@@ -90,5 +91,38 @@ export class HistorialComponent implements OnInit {
       }
     }
     this.loading = false;
+  }
+
+  async downloadExcel() {
+    let params = `fecha_inicio=${this.fechainicio}&fecha_fin=${this.fechafin}`;
+
+    if (this.historial.administrador !== 0) {
+      params += `&administrador=${this.historial.administrador.toString()}`;
+    }
+    if (this.historial.tipo_usuario !== 0) {
+      params += `&tipo_usuario=${this.historial.tipo_usuario.toString()}`;
+    }
+
+    const response = await this.auth.getHistorial(params);
+    if (response[0]) {
+      const excelExport = [];
+      for (const data of response[1]) {
+        const item = {
+          identificacion: data.usuario.dni,
+          nombres: data.usuario.nombres,
+          status: data.usuario.socio_status,
+          tipo: data.usuario.tipo.nombres,
+          parentesco: data.usuario.parentesco,
+          autorizacion: data.autorizacion.nombres,
+          administrador: data.administrador.nombres,
+          acceso: data.acceso.nombres,
+          comentarios: data.descripcion,
+          entrada: data.fecha_entrada,
+          salida: data.fecha_salida
+        };
+        excelExport.push(item);
+      }
+      this.excelServ.exportAsExcelFile(excelExport, 'sample');
+    }
   }
 }
