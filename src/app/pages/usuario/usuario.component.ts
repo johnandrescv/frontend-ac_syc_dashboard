@@ -61,8 +61,11 @@ export class UsuarioComponent implements OnInit {
     this.modalService.open(content);
   }
 
-  getUser() {
+  getUser(edit = false) {
     this.loading = true;
+    if (edit) {
+      this.users = [];
+    }
     this.auth.getUser(this.page).subscribe( (resp: any) => {
       if (resp.length === 0) {
         this.moreData = false;
@@ -94,7 +97,7 @@ export class UsuarioComponent implements OnInit {
 
     if (response) {
       this.modalService.dismissAll();
-      this.getUser();
+      this.getUser(true);
     }
   }
 

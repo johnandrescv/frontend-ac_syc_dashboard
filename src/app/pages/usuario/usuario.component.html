@@ -30,11 +30,11 @@
                                <span class="badge badge-secondary ml-2" *ngIf="user.tipo.id_tipo === 1 && user.parentesco !== 'SOCIO'">{{user.parentesco}}</span> 
                                <span class="badge badge-success ml-2" *ngIf="user.tipo.id_tipo === 1">{{user.socio_status}}</span> 
                                <span class="badge badge-warning" *ngIf="user.tipo.id_tipo === 2">{{user.tipo.nombres}}</span> 
-                               <span class="badge badge-danger" *ngIf="user.tipo.id_tipo === 3">{{user.tipo.nombres}}</span>
+                               <span class="badge badge-danger" *ngIf="user.tipo.id_tipo >= 3">{{user.tipo.nombres}}</span>
                             </td>
                             <td>
                                 <a data-toggle="tooltip" data-original-title="Editar" (click)="openUser(contentUser, user)"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
-                                <a data-toggle="tooltip" data-original-title="Eliminar" (click)="delete(user.id_usuario)"> <i class="fa fa-trash text-danger m-r-10"></i> </a>
+                                <!-- <a data-toggle="tooltip" data-original-title="Eliminar" (click)="delete(user.id_usuario)"> <i class="fa fa-trash text-danger m-r-10"></i> </a> -->
                             </td>
                         </tr>
                     </tbody>
