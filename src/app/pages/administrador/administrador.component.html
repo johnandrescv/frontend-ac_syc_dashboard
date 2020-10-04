@@ -22,7 +22,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let admin of admins | filter:filterName; let i=index ">
+                        <tr *ngFor="let admin of (admins | aux:'nombres':filterName); let i=index">
                             <th scope="row ">{{i+1}}</th>
                             <td>{{admin.nombres}}</td>
                             <td>{{admin.usuario}}</td>
@@ -35,9 +35,6 @@
 
                             </td>
                         </tr>
-
-
-
                     </tbody>
                 </table>
             </div>

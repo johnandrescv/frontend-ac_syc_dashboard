@@ -27,6 +27,7 @@ import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-
 import { HistorialComponent } from './pages/historial/historial.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { DiffPipe } from './pipes/diff.pipe';
+import { AuxPipe } from './pipes/aux.pipe';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { DiffPipe } from './pipes/diff.pipe';
     HistorialComponent,
     DashboardComponent,
     DiffPipe,
+    AuxPipe,
   ],
   imports: [
     BrowserModule,

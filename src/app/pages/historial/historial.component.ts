@@ -28,6 +28,7 @@ export class HistorialComponent implements OnInit {
   fechainicio = '';
   fechafin = '';
   menu = ['Historial'];
+  filter = '';
   constructor(private auth: AuthService,
               private excelServ: ExcelService,
               private modalService: NgbModal) { }
